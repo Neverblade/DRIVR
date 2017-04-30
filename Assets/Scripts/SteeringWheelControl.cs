@@ -5,6 +5,7 @@ using UnityEngine;
 public class SteeringWheelControl : MonoBehaviour {
 
     public float maxTurnAngle = 2 * 360;
+	public float returnSpeed = .5f;
 
     public OVRInput.Controller leftController = OVRInput.Controller.LTouch;
     public OVRInput.Controller rightController = OVRInput.Controller.RTouch;
@@ -49,6 +50,9 @@ public class SteeringWheelControl : MonoBehaviour {
             print("Right Hand OFF");
         }
 
+		// Don't update rot if button A is held down.
+		if (OVRInput.Get(OVRInput.Button.Three, rightController)) return;
+
         // Update rotation
         Quaternion newRotation = Quaternion.identity;
         if (leftHeld && rightHeld) {
@@ -73,21 +77,29 @@ public class SteeringWheelControl : MonoBehaviour {
             Quaternion rot = Quaternion.FromToRotation(rightVector, currVector);
             newRotation = rot * rightSetRot;
         }
-        else return;
 
-        // Make sure it's fixated on one local axis
-        transform.rotation = newRotation;
-        transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
-        float diff = transform.localEulerAngles.y - prevLocalAngle.y;
-        if (diff > 180) {
-            diff -= 360;
-        } else if (diff < -180) {
-            diff += 360;
-        }
-        angle += diff;
-        angle = Mathf.Clamp(angle, -maxTurnAngle, maxTurnAngle);
-        transform.localEulerAngles = new Vector3(0, angle, 0);
-        prevLocalAngle = transform.localEulerAngles;
+		if (leftHeld || rightHeld) {
+			// Make sure it's fixated on one local axis
+			transform.rotation = newRotation;
+			transform.localEulerAngles = new Vector3 (0, transform.localEulerAngles.y, 0);
+			float diff = transform.localEulerAngles.y - prevLocalAngle.y;
+			if (diff > 180) {
+				diff -= 360;
+			} else if (diff < -180) {
+				diff += 360;
+			}
+			angle += diff;
+			angle = Mathf.Clamp (angle, -maxTurnAngle, maxTurnAngle);
+			transform.localEulerAngles = new Vector3 (0, angle, 0);
+			prevLocalAngle = transform.localEulerAngles;
+		} else {
+			if (angle > 0) {
+				angle = Mathf.Max(angle - returnSpeed, 0);
+			} else if (angle < 0) {
+				angle += Mathf.Min (angle + returnSpeed, 0);
+			}
+			transform.localEulerAngles = new Vector3 (0, angle, 0);
+		}
     }
 
     void OnTriggerStay(Collider other) {
