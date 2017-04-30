@@ -5,7 +5,7 @@ using UnityEngine;
 public class SteeringWheelControl : MonoBehaviour {
 
     public float maxTurnAngle = 2 * 360;
-	public float returnSpeed = .5f;
+	public float returnSpeed = .01f;
 
     public OVRInput.Controller leftController = OVRInput.Controller.LTouch;
     public OVRInput.Controller rightController = OVRInput.Controller.RTouch;
@@ -51,7 +51,7 @@ public class SteeringWheelControl : MonoBehaviour {
         }
 
 		// Don't update rot if button A is held down.
-		if (OVRInput.Get(OVRInput.Button.Three, rightController)) return;
+		if (OVRInput.Get(OVRInput.Button.One, rightController)) return;
 
         // Update rotation
         Quaternion newRotation = Quaternion.identity;
@@ -96,10 +96,11 @@ public class SteeringWheelControl : MonoBehaviour {
 			if (angle > 0) {
 				angle = Mathf.Max(angle - returnSpeed, 0);
 			} else if (angle < 0) {
-				angle += Mathf.Min (angle + returnSpeed, 0);
+				angle = Mathf.Min (angle + returnSpeed, 0);
 			}
 			transform.localEulerAngles = new Vector3 (0, angle, 0);
 		}
+        print(angle);
     }
 
     void OnTriggerStay(Collider other) {
