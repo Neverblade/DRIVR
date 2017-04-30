@@ -100,7 +100,6 @@ public class SteeringWheelControl : MonoBehaviour {
 			}
 			transform.localEulerAngles = new Vector3 (0, angle, 0);
 		}
-        print(angle);
     }
 
     void OnTriggerStay(Collider other) {
