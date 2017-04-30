@@ -7,8 +7,12 @@ namespace UnityStandardAssets.Vehicles.Car
     [RequireComponent(typeof (CarController))]
     public class CarUserControl : MonoBehaviour
     {
-        private CarController m_Car; // the car controller we want to use
+        public SteeringWheelControl steeringWheelControl;
 
+        public OVRInput.Controller leftController = OVRInput.Controller.LTouch;
+        public OVRInput.Controller rightController = OVRInput.Controller.RTouch;
+
+        private CarController m_Car; // the car controller we want to use
 
         private void Awake()
         {
@@ -20,14 +24,13 @@ namespace UnityStandardAssets.Vehicles.Car
         private void FixedUpdate()
         {
             // pass the input to the car!
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            float v = CrossPlatformInputManager.GetAxis("Vertical");
-#if !MOBILE_INPUT
+            //float h = CrossPlatformInputManager.GetAxis("Horizontal");
+            float h = steeringWheelControl.clampAngle();
+            //float v = CrossPlatformInputManager.GetAxis("Vertical");
+            float v = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController);
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
-            m_Car.Move(h, v, v, handbrake);
-#else
-            m_Car.Move(h, v, v, 0f);
-#endif
+            float b = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController);
+            m_Car.Move(h, v, -b, handbrake);
         }
     }
 }

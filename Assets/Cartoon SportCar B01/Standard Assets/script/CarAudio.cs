@@ -88,6 +88,7 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             // get the distance to main camera
             float camDist = (Camera.main.transform.position - transform.position).sqrMagnitude;
+            camDist = 0f;
 
             // stop sound if the object is beyond the maximum roll off distance
             if (m_StartedSound && camDist > maxRolloffDistance*maxRolloffDistance)
