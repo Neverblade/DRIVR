@@ -31,7 +31,7 @@ public class TurnSignalControl : MonoBehaviour {
 	void Update () {
 		// Check for release
 		if ((currHand == hand.LEFT && OVRInput.Get (OVRInput.Axis1D.PrimaryHandTrigger, leftController) < 0.9f)
-			|| (currHand == hand.RIGHT && OVRInput.Get (OVRInput.Axis1D.PrimaryHandTrigger, rightController)) < 0.9f) {
+			|| (currHand == hand.RIGHT && OVRInput.Get (OVRInput.Axis1D.PrimaryHandTrigger, rightController) < 0.9f)) {
 
 			currHand = hand.NONE;
 			// Find the nearest state
@@ -51,7 +51,7 @@ public class TurnSignalControl : MonoBehaviour {
 		if (currHand == hand.LEFT) {
 			Vector3 vec = Vector3.ProjectOnPlane (leftHand.transform.position - transform.position, transform.up);
 			angle = Mathf.Clamp(stateAngles[state] + Vector3.Angle (setVec, vec), stateAngles[0], stateAngles[stateAngles.Length - 1]);
-		} else if (currHand = hand.RIGHT) {
+		} else if (currHand == hand.RIGHT) {
 			Vector3 vec = Vector3.ProjectOnPlane (rightHand.transform.position - transform.position, transform.up);
 			angle = Mathf.Clamp(stateAngles[state] + Vector3.Angle (setVec, vec), stateAngles[0], stateAngles[stateAngles.Length - 1]);
 		}
