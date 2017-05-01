@@ -20,4 +20,4 @@ Prereqs:
     1. DRIVR was built with Unity 5.5 and so has not been tested for 5.6.
     2. Blender is required to successfuly import the models.
 
-The demo scene in located in the top-most "Assets" folder, and is called "highway". Otherwise, you can look through the code we wrote in the "Assets/Scripts", or look at the models in "Assets/Models".
+The unity scene that contains the demo is located in the "Assets" folder, and is called "highway". You can also look through the code we wrote in the "Assets/Scripts", or look at the models in "Assets/Models".
