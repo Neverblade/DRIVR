@@ -2,7 +2,7 @@ Thanks for taking a look at our project! DRIVR currently supports the Oculus Rif
 
 ## Trying the Demo
 
-To just run the demo that you saw in the video, setup the Rift and play the EXE file within the "builds" folder, as you would any other Unity game. The controls are as follows:
+To just run the demo that you saw in the video, setup the Rift and play the EXE file, as you would any other Unity game. The controls are as follows:
 
 * Left/Right Grip Trigger: Hold onto the steering wheel
 * Right Index Trigger: Accelerate
