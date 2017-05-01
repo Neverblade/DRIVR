@@ -6,13 +6,16 @@ public class TurnSignalArrowController : MonoBehaviour {
 
     public GameObject leftArrow, rightArrow;
     public TurnSignalControl control;
+    public AudioClip onClip, offClip;
 
+    private AudioSource audioSource;
     private int prvState = 1;
     private float t;
     private bool curFlash;
 
 	// Use this for initialization
 	void Start () {
+        audioSource = GetComponent<AudioSource>();
         leftArrow.SetActive(false);
         rightArrow.SetActive(false);
 	}
@@ -44,5 +47,9 @@ public class TurnSignalArrowController : MonoBehaviour {
         curFlash = on;
         if (prvState == 0) leftArrow.SetActive(on);
         if (prvState == 2) rightArrow.SetActive(on);
+        if (prvState != 1) {
+            if (on) audioSource.PlayOneShot(onClip);
+            else audioSource.PlayOneShot(offClip);
+        }
     }
 }
