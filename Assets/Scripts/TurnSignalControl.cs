@@ -70,7 +70,7 @@ public class TurnSignalControl : MonoBehaviour {
         } else if (val < -.7f && prevTriggerValue > -.7f && state != 0) {
             state -= 1;
         }
-        print(val);
+        //print(val);
         prevTriggerValue = val;
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, stateAngles[state]);
     }
